@@ -8,7 +8,7 @@ def generate_unique_code():
     
     while True:
         code = ''.join(random.choices(string.ascii_uppercase, k=length))
-        if Room.objects.filter(code=code).count() ==0:
+        if Room.objects.filter(code=code).count() == 0:
             break
         return code  
 

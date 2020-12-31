@@ -76,18 +76,18 @@ export default class CreateRoomPage extends Component{
             <Grid item xs={12} align="center">
                 <FormControl>
                     <TextField required={true}
-                               type="number" 
-                               onChange={this.handleVotesChange}
-                               defaultValue={this.defaultVotes}
-                               inputProps={{
-                                   min: 1,
-                                   style: {textAlign:'center'}
-                               }} />
-                               <FormHelperText>
-                                   <div align="center" >
-                                       Votes Required to Skip Song
-                                   </div>
-                             </FormHelperText>
+                            type="number" 
+                            onChange={this.handleVotesChange}
+                            defaultValue={this.defaultVotes}
+                            inputProps={{
+                                min: 1,
+                                style: {textAlign:'center'}
+                            }} />
+                            <FormHelperText>
+                                <div align="center" >
+                                    Votes Required to Skip Song
+                                </div>
+                            </FormHelperText>
                 </FormControl>
             </Grid>
             <Grid item xs={12} align="center">

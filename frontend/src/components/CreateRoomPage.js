@@ -37,7 +37,8 @@ export default class CreateRoomPage extends Component{
             guestCanPause: e.target.value === "true" ? true : false,
         });
     }
-
+//  A function to consume the django api in react so that
+// when a button is pressed it create a room
     handleRoomButtonPressed(){
         const requestOptions = {
             method: 'POST',
@@ -47,7 +48,8 @@ export default class CreateRoomPage extends Component{
                 guest_can_pause: this.state.guestCanPause
             }),
         };
-        fetch('api/create-room/', requestOptions).then((response) => response.json()).then((data) => console.log(data))
+        fetch('api/create-room/', requestOptions).then((response) => 
+        response.json()).then((data) => this.props.history.push("/room/"+data.code.toString()));
 
     }
 

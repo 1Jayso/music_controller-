@@ -7,9 +7,10 @@ export default class RoomJoinPage extends Component{
         super(props);
         this.state = {
             roomCode: "",
-            error: "hello"
+            error: ""
         };
-        this._handleTextFieldChange =this._handleTextFieldChange.bind(this);
+        this._handleTextFieldChange = this._handleTextFieldChange.bind(this);
+        this._handleRoomButtonPressed = this._handleRoomButtonPressed.bind(this);
     }
 
     
@@ -33,7 +34,7 @@ export default class RoomJoinPage extends Component{
                         />
                 </Grid>
                 <Grid item xs={12} align="center">
-                    <Button variant="contained" color="primary" onclick>
+                    <Button variant="contained" color="primary" onClick={this._handleRoomButtonPressed}>
                         Enter Room
                     </Button>
                 </Grid>
@@ -43,13 +44,19 @@ export default class RoomJoinPage extends Component{
                     </Button>
                 </Grid>
             </Grid>
-        )
-
+        );
+        }
+        // Handles changes in TextField
         _handleTextFieldChange(e){
             this.setState({
                 roomCode: e.target.value,
-            });
+            })
         }
-    }
+
+
+        // handles what happens when a button is pressed
+        _handleRoomButtonPressed(){
+            console.log(this.state.roomCode)
+        }
 
 } 

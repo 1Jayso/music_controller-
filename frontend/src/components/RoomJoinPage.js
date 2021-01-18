@@ -13,7 +13,6 @@ export default class RoomJoinPage extends Component{
         this._handleRoomButtonPressed = this._handleRoomButtonPressed.bind(this);
     }
 
-    
     render(){
         return (
             <Grid container spacing={1}>

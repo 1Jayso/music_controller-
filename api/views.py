@@ -1,13 +1,16 @@
 from django.shortcuts import render
 from rest_framework import generics, status 
-from .models import Room
 from .serializer import RoomSerializer,CreateRoomSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response 
+from .models import Room
 
 class RoomView(generics.ListAPIView):
+
+
     queryset = Room.objects.all()
     serializer_class = RoomSerializer
+
 
 
 
@@ -62,10 +65,17 @@ class CreateRoomView(APIView):
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            guest_can_pause = serializer.data['guest_can_pause']
-            votes_to_skip = serializer.data['votes_to_skip']
+            print(serializer.is_valid())
+            guest_can_pause = serializer.data.get('guest_can_pause')
+            votes_to_skip = serializer.data.get('votes_to_skip')
             host = self.request.session.session_key
-            queryset = Room.objects.filter(host=host)
+            print(host)
+            # queryset = Room.objects.filter(host=host)
+            queryset = Room.objects.all()
+            queryset.filter(host=host)
+            print(Room.objects.first())
+            print(Room.host)
+            print(queryset)
             # print("hey ", queryset[0])
         
             if queryset.exists():
@@ -77,8 +87,8 @@ class CreateRoomView(APIView):
                 self.request.session['room_code'] = room.code
                 return Response(RoomSerializer(room).data, status=status.HTTP_200_OK)
             else:
-                room = Room(host=host, guest_can_pause=guest_can_pause,
-                            votes_to_skip=votes_to_skip)
+                room = Room(host=host, guest_can_pause=guest_can_pause, votes_to_skip=votes_to_skip)
+                print(room)
                 room.save()
                 self.request.session['room_code'] = room.code
                 return Response(RoomSerializer(room).data, status=status.HTTP_201_CREATED)

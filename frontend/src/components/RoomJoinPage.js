@@ -55,7 +55,26 @@ export default class RoomJoinPage extends Component{
 
         // handles what happens when a button is pressed
         _handleRoomButtonPressed(){
-            console.log(this.state.roomCode)
+            const requestOptions = {
+                method: "POST",
+                headers: {"content-Type": "application/json"},
+                body: JSON.stringify({
+                    code: this.state.roomcode
+                })
+
+            };
+
+            fetch('/api/join-room/', requestOptions).then((response) => {
+                if (response.ok){
+                    this.props.history.push(`/room${this.state.roomCode}`)
+                }else{
+                    this.setState({error: "ROom not found."});
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            });
+            
         }
 
 } 

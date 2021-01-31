@@ -9,6 +9,21 @@ import { BrowserRouter as Router, Route, Switch,Link,Redirect } from 'react-rout
 export default class HomePage extends Component{
     constructor(props){
         super(props)
+        this.state ={
+            roommCode: null,
+        };
+    }
+
+
+    async componentDidMount(){
+        fetch('/api/user-in-room')
+        .then((response) => response.json())
+        .then((data) => {
+            this.setState({
+                roommCode: data.code
+            })
+        });
+
     }
 
 
@@ -40,7 +55,13 @@ export default class HomePage extends Component{
         return(
             <Router>
                 <Switch>
-                    <Route exact path='/'> {this.renderHomePage()}</Route>
+                    <Route exact path='/' render={() =>{
+                        return this.state.roommCode ? 
+                        (<Redirect to={`/room/${this.state.roommCode}`}/>) : (this.renderHomePage());
+                    }}
+
+                    /> 
+                    
                     <Route path='/join' component={RoomJoinPage}/>
                     <Route  path='/create' component={CreateRoom} />
                     <Route path="/room/:roomCode" component={Room} />

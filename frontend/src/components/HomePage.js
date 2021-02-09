@@ -13,6 +13,7 @@ export default class HomePage extends Component{
         this.state ={
             roommCode: null,
         };
+        this.clearRoomCode =this.clearRoomCode.bind(this);
     }
 
 
@@ -21,7 +22,7 @@ export default class HomePage extends Component{
         .then((response) => response.json())
         .then((data) => {
             this.setState({
-                roommCode: data.code
+                roomCode: data.code
             })
         });
 
@@ -52,8 +53,14 @@ export default class HomePage extends Component{
 
     }
 
-
- 
+// This sets the roomcode 
+// to null so that at anpoint when you leave a room it will
+//  redirect you to the homePage instead of trying to enter the room again
+clearRoomCode() {
+    this.setState({
+        roomCode: null,
+    });
+}
 
     render(){
         return(
@@ -68,7 +75,12 @@ export default class HomePage extends Component{
                     
                     <Route path='/join' component={RoomJoinPage}/>
                     <Route  path='/create' component={CreateRoom} />
-                    <Route path="/room/:roomCode" component={Room} />
+                    <Route
+                        path="/room/:roomCode" 
+                        render={(props) => {
+                            return <Room {...props} leaveRoomCallback={this.clearRoomCode} />; 
+                        }}
+                    />
                 </Switch>
             </Router>
         )

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Button, Typography } from '@material-ui/core';
-
+import HomePage from "./HomePage"
 
 export default class Room extends Component{
     constructor(props){
@@ -17,9 +17,19 @@ export default class Room extends Component{
 
     }
 
+    // this function displays the Room details
     getRoomDetails(){
-        fetch('/api/get-room' + '?code=' +this.roomCode).then((response) =>
-        response.json()).then((data) => {
+        fetch('/api/get-room' + '?code=' +this.roomCode).then((response) => {
+            // The if statement checks if response doesn't return data so that it will 
+            // redirect the user to the homepage instead of empty data 
+            //  fields in the browser.
+            if (!response.ok){
+                this.props.HomePage.leaveRoomCallback();
+                this.props.history.push('/'); 
+            }
+        
+        response.json()})
+        .then((data) => {
             this.setState({
                 votesToskip: data.votes_to_skip,
                 guestCanPause: data.guest_can_pause,
@@ -36,7 +46,8 @@ leaveButtonPressed(){
     }
 
     fetch("/api/leave-room", requestOptions).then((_response) => {
-        this.props.history.push('/')
+        this.props.leaveRoomCallback();
+        this.props.history.push('/'); 
     });
 
 }

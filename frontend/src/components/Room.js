@@ -28,7 +28,8 @@ export default class Room extends Component{
                 this.props.history.push('/'); 
             }
         
-        response.json()})
+        return response.json();
+        })
         .then((data) => {
             this.setState({
                 votesToskip: data.votes_to_skip,

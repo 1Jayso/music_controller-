@@ -3,6 +3,7 @@ import RoomJoinPage from './RoomJoinPage'
 import CreateRoom from './CreateRoomPage'
 import Room from './Room'
 import {Grid, Button, ButtonGroup, Typography} from '@material-ui/core'
+ 
 import { BrowserRouter as Router, Route, Switch,Link,Redirect } from 'react-router-dom';
 
 
@@ -31,7 +32,7 @@ export default class HomePage extends Component{
         return(
             <Grid container spacing={3}>
                 <Grid item xs={12} align="center">
-                    <Typography variant="h3"cpmpact="h3">
+                    <Typography variant="h3"component="h3">
                         House Party
                     </Typography>
                 </Grid>
@@ -50,6 +51,9 @@ export default class HomePage extends Component{
         );
 
     }
+
+
+ 
 
     render(){
         return(

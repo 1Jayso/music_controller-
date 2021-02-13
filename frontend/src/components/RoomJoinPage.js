@@ -24,7 +24,7 @@ export default class RoomJoinPage extends Component{
                 <Grid item xs={12} align="center">
                     <TextField
                         error={this.state.error}
-                        label="code"
+                        label="Code"
                         placeholder="Enter a Room Code"
                         value={this.state.roomCode}
                         helperText={this.state.error}
@@ -57,14 +57,14 @@ export default class RoomJoinPage extends Component{
         _handleRoomButtonPressed(){
             const requestOptions = {
                 method: "POST",
-                headers: {"content-Type": "application/json"},
+                headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({
-                    code: this.state.roomcode
-                })
+                    code: this.state.roomCode
+                }),
 
             };
 
-            fetch('/api/join-room/', requestOptions).then((response) => {
+            fetch('api/join-room', requestOptions).then((response) => {
                 if (response.ok){
                     this.props.history.push(`/room${this.state.roomCode}`)
                 }else{
@@ -72,7 +72,7 @@ export default class RoomJoinPage extends Component{
                 }
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error);
             });
             
         }

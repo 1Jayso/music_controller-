@@ -37,25 +37,34 @@ class GetRoom(APIView):
 
 # A class to allow a user join a room
 class JoinRoom(APIView):
+    '''I had a bad request error and the reason was because I had move the code within the first if
+        statement and bbecause the session already exists so it doesn't execute the first 
+        if block it rather sends the else response(BAD REQUEST)
+    '''
     lookup_url_kwarg = 'code'
     def post(self, request, format=None):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
-            code = request.data.get(self.lookup_url_kwarg)
-            print("code is :", code)
-            if code != None:
-                room_result = Room.objects.filter(code=code)
-                print(room_result)
-                # you can use if queryset.exists()
-                #  instead of if len(room_results) >0
-                if len(room_result) > 0:
-                    room = room_result[0]
-                    print("Heyyy!!!", room)
-                    self.request.session['room_code'] = code
-                    return Response({'message': 'Room Joined'}, status=status.HTTP_200_ok)
+        code = request.data.get(self.lookup_url_kwarg)
+        print("code is :", code)
+        if code != None:
+            room_result = Room.objects.filter(code=code)
+            print(room_result)
+            # you can use if queryset.exists()
+            #  instead of if len(room_results) >0
+            if len(room_result) > 0:
+                room = room_result[0]
+                print("Heyyy!!!", room)
+                self.request.session['room_code'] = code
+                return Response({'message': 'Room Joined'}, status=status.HTTP_200_OK)
             return Response({'Bad Request': 'Invalid Room Code'}, status=status.HTTP_400_BAD_REQUEST)
         return Response({'Bad Request': 'Invalid post data, did not find  code key'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
 
 
 

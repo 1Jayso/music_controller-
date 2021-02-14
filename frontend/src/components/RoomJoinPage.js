@@ -45,36 +45,36 @@ export default class RoomJoinPage extends Component{
             </Grid>
         );
         }
-        // Handles changes in TextField
-        _handleTextFieldChange(e){
-            this.setState({
-                roomCode: e.target.value,
-            })
-        }
+    // Handles changes in TextField
+    _handleTextFieldChange(e){
+        this.setState({
+            roomCode: e.target.value,
+        })
+    }
 
 
-        // handles what happens when a button is pressed
-        _handleRoomButtonPressed(){
-            const requestOptions = {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    code: this.state.roomCode
-                }),
+    // handles what happens when a button is pressed
+    _handleRoomButtonPressed(){
+        const requestOptions = {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                code: this.state.roomCode,
+            }),
 
-            };
+        };
 
-            fetch('api/join-room', requestOptions).then((response) => {
-                if (response.ok){
-                    this.props.history.push(`/room${this.state.roomCode}`)
-                }else{
-                    this.setState({error: "Room not found."});
-                }
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-            
-        }
+        fetch("/api/join-room", requestOptions).then((response) => {
+            if (response.ok){
+                this.props.history.push(`/room/${this.state.roomCode}`)
+            }else{
+                this.setState({error: "Room not found."});
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+        
+    }
 
 } 

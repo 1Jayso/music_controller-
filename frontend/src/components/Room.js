@@ -1,34 +1,39 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Grid, Button, Typography } from '@material-ui/core';
 import HomePage from "./HomePage"
 import CreateRoomPage from "./CreateRoomPage"
 export default class Room extends Component{
+    
     constructor(props){
         super(props);
         this.state = {
-            votesToskip: 2,
+            votesToSkip: 2,
             guestCanPause: false,
             isHost: false,
             showSettings:false,
 
         };
         this.roomCode = this.props.match.params.roomCode;
-        this.getRoomDetails();
         this.leaveButtonPressed = this.leaveButtonPressed.bind(this);
         this.updateShowSetttings = this.updateShowSetttings.bind(this);
         this.renderSettings = this.renderSettings.bind(this);
+        this.getRoomDetails = this.getRoomDetails.bind(this);
+        this.renderSettingsButton = this.renderSettingsButton.bind(this);
+        this.getRoomDetails()
     }
 
 
 
     // this function displays the Room details
     getRoomDetails(){
-        fetch('/api/get-room' + '?code=' +this.roomCode).then((response) => {
+        return fetch('/api/get-room' + '?code=' +this.roomCode).then((response) => {
             // The if statement checks if response doesn't return data so that it will 
             // redirect the user to the homepage instead of empty data 
             //  fields in the browser.
             if (!response.ok){
-                this.props.HomePage.leaveRoomCallback();
+                this.props.leaveRoomCallback();
                 this.props.history.push('/'); 
             }
         
@@ -36,10 +41,11 @@ export default class Room extends Component{
         })
         .then((data) => {
             this.setState({
-                votesToskip: data.votes_to_skip,
+                votesToSkip: data.votes_to_skip,
                 guestCanPause: data.guest_can_pause,
                 isHost: data.is_host,    
             });
+            
         });
     }
 
@@ -72,11 +78,11 @@ export default class Room extends Component{
         <Grid container spacing={1}>
             <Grid item xs={12} align="center">
                 <CreateRoomPage update={true} 
-                votesToskip={this.state.votesToskip}
+                votesToSkip={this.state.votesToSkip}
                 guestCanPause={this.state.guestCanPause}
-                roomCode={this.state.roomCode}
-                updateCallback={() => {}} >
-                </CreateRoomPage>
+                roomCode={this.roomCode}
+                updateCallback={this.getRoomDetails} >
+                </CreateRoomPage> 
 
             </Grid>
             <Grid item xs={12} align="center">
@@ -106,6 +112,8 @@ export default class Room extends Component{
             if (this.state.showSettings){
                 return this.renderSettings();
             }
+            else{
+
             return(
             <Grid container spacing={1}>
                 <Grid item xs={12} align="center"> 
@@ -116,7 +124,7 @@ export default class Room extends Component{
 
                 <Grid item xs={12} align="center">
                     <Typography varaiant="h6" component="h6">
-                        votes: {this.state.votesToskip}
+                        votes: {this.state.votesToSkip}
                     </Typography>          
                 </Grid>
 
@@ -139,7 +147,8 @@ export default class Room extends Component{
                 </Grid>
             </Grid>
 
-        
-        );
+            
+            );
+            }
     }
 } 

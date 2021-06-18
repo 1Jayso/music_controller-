@@ -117,25 +117,25 @@ export default class Room extends Component{
             return(
             <Grid container spacing={1}>
                 <Grid item xs={12} align="center"> 
-                    <Typography varaiant="h6" component="h6">
+                    <Typography variant="h4" component="h4">
                         Code: {this.roomCode } 
                     </Typography>
                 </Grid>
 
                 <Grid item xs={12} align="center">
-                    <Typography varaiant="h6" component="h6">
-                        votes: {this.state.votesToSkip}
+                    <Typography variant="h6" component="h6">
+                        Votes: {this.state.votesToSkip}
                     </Typography>          
                 </Grid>
 
                 <Grid item xs={12} align="center"> 
-                    <Typography varaiant="h6" component="h6">
+                    <Typography variant="h6" component="h6">
                         Guest Can Pause: {this.state.guestCanPause.toString()} 
                     </Typography>    
                 </Grid>
 
                 <Grid item xs={12} align="center">
-                        <Typography varaiant="h6" component="h6">
+                        <Typography variant="h6" component="h6">
                             Host: {this.state.isHost.toString()}
                         </Typography>
                 </Grid>
